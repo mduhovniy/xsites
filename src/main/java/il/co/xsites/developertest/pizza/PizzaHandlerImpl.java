@@ -26,6 +26,18 @@ public class PizzaHandlerImpl implements PizzaHandler {
 
 	@Override
 	@Transactional(readOnly = true)
+	public List<PizzaMenu> getPizzaMenuByPriceBetween(Double minPrice, Double maxPrice) {
+		return pizzaDao.getPizzaMenusByPriceBetween(minPrice, maxPrice);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<PizzaMenu> getPizzaMenuByNameAndPriceBetween(String name, Double minPrice, Double maxPrice) {
+		return pizzaDao.getPizzaMenusByNameAndPriceBetween(name, minPrice, maxPrice);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
 	public PizzaMenu getPizza(Long id) {
 		return pizzaDao.getPizza(id);
 	}

@@ -1,9 +1,29 @@
 package il.co.xsites.developertest.utils;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+
 public class Utils {
+
+	private static final Log log = LogFactory.getLog(Utils.class);
 
 	private Utils() {
 		throw new UnsupportedOperationException();
+	}
+
+	public static void validatePizzaPrices(Double minPrice, Double maxPrice) throws Exception {
+		if(minPrice < 0) {
+			throw new Exception("Parameter minPrice couldn't be negative");
+		}
+		if(maxPrice < 0) {
+			throw new Exception("Parameter maxPrice couldn't be negative");
+		}
+		if(maxPrice < minPrice) {
+			throw new Exception("Parameter maxPrice couldn't be less than minPrice");
+		}
 	}
 
 	/**
@@ -16,6 +36,27 @@ public class Utils {
 	 * @return
 	 */
 	public static String extractQueryString(Object source, Class annotation) {
-		return null;
+
+		StringBuilder queryStringBuilder = new StringBuilder();
+		boolean isFirstAnnotatedField = true;
+
+		try {
+			for (Field field : source.getClass().getDeclaredFields()) {
+				if (field.isAnnotationPresent(annotation)) {
+					field.setAccessible(true);
+					if (!isFirstAnnotatedField) {
+						queryStringBuilder.append("&");
+					}
+					queryStringBuilder.append(field.getName())
+							.append("=")
+							.append(field.get(source).toString());
+					isFirstAnnotatedField = false;
+				}
+			}
+		} catch (IllegalAccessException e) {
+			log.error(e);
+		}
+
+		return queryStringBuilder.toString();
 	}
 }

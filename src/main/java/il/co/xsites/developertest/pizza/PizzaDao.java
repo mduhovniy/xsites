@@ -8,5 +8,9 @@ public interface PizzaDao {
 
 	List<PizzaMenu> getPizzaMenus();
 
+	List<PizzaMenu> getPizzaMenusByPriceBetween(Double minPrice, Double maxPrice);
+
+	List<PizzaMenu> getPizzaMenusByNameAndPriceBetween(String name, Double minPrice, Double maxPrice);
+
 	PizzaMenu getPizza(Long id);
 }

@@ -1,5 +1,6 @@
 package il.co.xsites.developertest.pizza.model;
 
+import il.co.xsites.developertest.annotations.ExtractableForQuery;
 import il.co.xsites.developertest.base.BaseUpdatebleEntity;
 import il.co.xsites.developertest.base.ro.BaseRO;
 import il.co.xsites.developertest.pizza.ro.PizzaMenuRO;
@@ -16,8 +17,10 @@ public class PizzaMenu extends BaseUpdatebleEntity {
 
 	// ------------------------ Constants -----------------------
 	// ------------------------ Fields --------------------------
+	@ExtractableForQuery
 	private String name;
 
+	@ExtractableForQuery
 	private double price;
 
 	public PizzaMenu() {

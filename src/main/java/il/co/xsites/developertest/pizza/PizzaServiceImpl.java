@@ -1,5 +1,6 @@
 package il.co.xsites.developertest.pizza;
 
+import il.co.xsites.developertest.annotations.ExtractableForQuery;
 import il.co.xsites.developertest.base.ro.ResultRO;
 import il.co.xsites.developertest.pizza.model.PizzaMenu;
 import il.co.xsites.developertest.pizza.ro.PizzaMenuRO;
@@ -42,11 +43,45 @@ public class PizzaServiceImpl implements PizzaService {
 	}
 
 	@Override
+	public ResultRO getMenu(String name, Double minPrice, Double maxPrice) {
+
+		ResultRO resultRO = new ResultRO();
+		if(name == null & minPrice == null && maxPrice == null) {
+			return getMenu();
+		}
+		minPrice = minPrice == null ? 0 : minPrice;
+		maxPrice = maxPrice == null ? Double.MAX_VALUE : maxPrice;
+
+		try {
+			Utils.validatePizzaPrices(minPrice, maxPrice);
+
+			List<PizzaMenu> menu;
+			if(name == null) {
+				menu = pizzaHandler.getPizzaMenuByPriceBetween(minPrice, maxPrice);
+			} else {
+				menu = pizzaHandler.getPizzaMenuByNameAndPriceBetween(name, minPrice, maxPrice);
+			}
+			List<PizzaMenuRO> menuRO = new ArrayList<>();
+
+			for(PizzaMenu pizzaMenu : menu) {
+				menuRO.add(pizzaMenu.getRepresentation());
+			}
+
+			resultRO.setResult(menuRO);
+		} catch(Exception e) {
+			resultRO.setSuccess(false);
+			resultRO.setError(e.getMessage());
+		}
+
+		return resultRO;
+	}
+
+	@Override
 	public ResultRO orderPizza(Long id) {
 		ResultRO resultRO = new ResultRO();
 
 		PizzaMenu pizzaMenu = pizzaHandler.getPizza(id);
-		String pizzaQueryString = Utils.extractQueryString(pizzaMenu, null);
+		String pizzaQueryString = Utils.extractQueryString(pizzaMenu, ExtractableForQuery.class);
 
 		resultRO.setResult(pizzaQueryString);
 

@@ -32,8 +32,11 @@ public class PizzaController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/pizza/menu", method = RequestMethod.GET)
-	public ResultRO getMenu(HttpServletRequest request, HttpServletResponse response) {
-		return pizzaService.getMenu();
+	public ResultRO getMenu(@RequestParam(required = false) String name,
+							@RequestParam(required = false) Double minPrice,
+							@RequestParam(required = false) Double maxPrice,
+							HttpServletRequest request, HttpServletResponse response) {
+		return pizzaService.getMenu(name, minPrice, maxPrice);
 	}
 
 	/**
