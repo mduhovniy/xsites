@@ -3,7 +3,6 @@ package il.co.xsites.developertest.pizza;
 import il.co.xsites.developertest.base.BaseDaoImpl;
 import il.co.xsites.developertest.pizza.model.PizzaMenu;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;

@@ -44,13 +44,14 @@ public class Utils {
 			for (Field field : source.getClass().getDeclaredFields()) {
 				if (field.isAnnotationPresent(annotation)) {
 					field.setAccessible(true);
-					if (!isFirstAnnotatedField) {
+					if (isFirstAnnotatedField) {
+						isFirstAnnotatedField = false;
+					} else {
 						queryStringBuilder.append("&");
 					}
 					queryStringBuilder.append(field.getName())
 							.append("=")
 							.append(field.get(source).toString());
-					isFirstAnnotatedField = false;
 				}
 			}
 		} catch (IllegalAccessException e) {
