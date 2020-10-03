@@ -26,6 +26,9 @@ public class PizzaController {
 	 * e.g. /pizza/menu?name=chees&maxPrice=10 should return pizza data for pizza 'Cheesy Crust'
 	 * e.g. /pizza/menu?minPrice=0&maxPrice=1 should return pizza data for pizza 'Margherita'
 	 *
+	 * @param name
+	 * @param minPrice
+	 * @param maxPrice
 	 * @param request
 	 * @param response
 	 * @return

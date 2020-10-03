@@ -22,27 +22,6 @@ public class PizzaServiceImpl implements PizzaService {
 	private PizzaHandler pizzaHandler;
 
 	@Override
-	public ResultRO getMenu() {
-		ResultRO resultRO = new ResultRO();
-
-		try {
-			List<PizzaMenu> menu = pizzaHandler.getPizzaMenu();
-			List<PizzaMenuRO> menuRO = new ArrayList<>();
-
-			for(PizzaMenu pizzaMenu : menu) {
-				menuRO.add(pizzaMenu.getRepresentation());
-			}
-
-			resultRO.setResult(menuRO);
-		} catch(Exception e) {
-			resultRO.setSuccess(false);
-			resultRO.setError(e.getMessage());
-		}
-
-		return resultRO;
-	}
-
-	@Override
 	public ResultRO getMenu(String name, Double minPrice, Double maxPrice) {
 
 		ResultRO resultRO = new ResultRO();
@@ -84,6 +63,26 @@ public class PizzaServiceImpl implements PizzaService {
 		String pizzaQueryString = Utils.extractQueryString(pizzaMenu, ExtractableForQuery.class);
 
 		resultRO.setResult(pizzaQueryString);
+
+		return resultRO;
+	}
+
+	private ResultRO getMenu() {
+		ResultRO resultRO = new ResultRO();
+
+		try {
+			List<PizzaMenu> menu = pizzaHandler.getPizzaMenu();
+			List<PizzaMenuRO> menuRO = new ArrayList<>();
+
+			for(PizzaMenu pizzaMenu : menu) {
+				menuRO.add(pizzaMenu.getRepresentation());
+			}
+
+			resultRO.setResult(menuRO);
+		} catch(Exception e) {
+			resultRO.setSuccess(false);
+			resultRO.setError(e.getMessage());
+		}
 
 		return resultRO;
 	}
