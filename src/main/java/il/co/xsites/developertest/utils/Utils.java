@@ -35,7 +35,7 @@ public class Utils {
 	 * @param annotation
 	 * @return
 	 */
-	public static String extractQueryString(Object source, Class annotation) {
+	public static String extractQueryString(Object source, Class<? extends Annotation> annotation) {
 
 		StringBuilder queryStringBuilder = new StringBuilder();
 		boolean isFirstAnnotatedField = true;
